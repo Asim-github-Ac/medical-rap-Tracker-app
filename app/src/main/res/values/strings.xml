@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Medical Rap Tracker</string>
+    <string name="acc"><u>Create new Account?</u></string>
+    <string name="alreadyAccount"><u>Already Have Account</u></string>
+</resources>
