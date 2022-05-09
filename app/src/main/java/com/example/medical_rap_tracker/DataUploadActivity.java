@@ -195,7 +195,7 @@ public class DataUploadActivity extends AppCompatActivity implements LocationLis
 
     public void SendData(String email,String url){
         FirebaseFirestore firestore=FirebaseFirestore.getInstance();
-        UserModel_Data userModel_data=new UserModel_Data(dr_name.getText().toString().trim(),cinic_name.getText().toString().trim(),special_name.getText().toString(),medicne_name.getText().toString().trim(),dr_about_name.getText().toString().trim(),textInputLayoutSetLocation.getEditText().toString(),url,like_decision,sample_decion);
+        UserModel_Data userModel_data=new UserModel_Data(dr_name.getText().toString().trim(),cinic_name.getText().toString().trim(),special_name.getText().toString(),medicne_name.getText().toString().trim(),dr_about_name.getText().toString().trim(),locationtxt.getText().toString(),url,like_decision,sample_decion);
         firestore.collection("User Data").document("data").collection(email).add(userModel_data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
