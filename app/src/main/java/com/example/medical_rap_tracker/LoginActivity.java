@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
     RadioGroup radioGroup;
     ProgressDialog progressDialog;
     List<AdminAuth> authList=new ArrayList<>();
-    String accountType = "User";
+    String accountType = "Users";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Clicked on Admin", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.radioButton3:
-                        accountType = "User";
+                        accountType = "Users";
                         Toast.makeText(getApplicationContext(), "clicked on user", Toast.LENGTH_SHORT).show();
                         break;
                     default:
@@ -123,11 +123,12 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
 
-                } else if (accountType == "User") {
+                } else if (accountType == "Users") {
 
                     GetVerFication(emailAddress);
                     PrefManager prefManager=new PrefManager(getApplicationContext());
                     prefManager.setUserEmail(emailAddress);
+
 
                 }
             }
@@ -177,14 +178,26 @@ public class LoginActivity extends AppCompatActivity {
                     List<AdminAuth> auths=queryDocumentSnapshots.toObjects(AdminAuth.class);
                     authList.addAll(auths);
                     if (authList.get(0).getType().equals("Admin")){
-                        Intent intent=new Intent(getApplicationContext(),AdminActivity.class);
-                        startActivity(intent);
-                        progressDialog.dismiss();
-                        System.out.println("admin_______________"+authList.get(0).getType());
-                    }else if (authList.get(0).getType().equals("Users")){
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                        progressDialog.dismiss();
-                        System.out.println("users_______________"+authList.get(0).getType());
+                        if (accountType.equals(authList.get(0).getType())){
+                            Intent intent=new Intent(getApplicationContext(),AdminActivity.class);
+                            startActivity(intent);
+                            progressDialog.dismiss();
+                            System.out.println("admin_______________"+authList.get(0).getType());
+                        }else {
+                            progressDialog.dismiss();
+                            Toast.makeText(LoginActivity.this, "Please Select Admin", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }else if (authList.get(0).getType().equals("Users")) {
+                        if (accountType.equals(authList.get(0).getType())) {
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            progressDialog.dismiss();
+
+                            System.out.println("users_______________" + authList.get(0).getType());
+                        }else {
+                            progressDialog.dismiss();
+                            Toast.makeText(LoginActivity.this, "Account Not Found", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }

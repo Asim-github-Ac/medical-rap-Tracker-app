@@ -19,6 +19,7 @@ import com.example.medical_rap_tracker.Model.AdminAuth;
 import com.example.medical_rap_tracker.Model.DoctorModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -63,6 +64,8 @@ public class AdminActivity extends AppCompatActivity {
                 break;
             case R.id.signout:
                 Toast.makeText(getApplicationContext(), "Sign Out", Toast.LENGTH_SHORT).show();
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getApplicationContext(),LoginActivity.class));
                 break;
             default:
                 Toast.makeText(getApplicationContext(), "Item not found", Toast.LENGTH_SHORT).show();
