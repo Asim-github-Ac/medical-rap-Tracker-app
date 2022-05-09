@@ -17,6 +17,7 @@ import com.example.medical_rap_tracker.Adapter.AdminView;
 import com.example.medical_rap_tracker.Adapter.DoctorAdapter;
 import com.example.medical_rap_tracker.Model.AdminAuth;
 import com.example.medical_rap_tracker.Model.DoctorModel;
+import com.example.medical_rap_tracker.SharedPrefrence.PrefManager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,7 +43,7 @@ public class AdminActivity extends AppCompatActivity {
         recyclerView=findViewById(R.id.rvadmin);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,1));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         GetData();
 
@@ -74,8 +75,9 @@ public class AdminActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     public void GetData(){
+        PrefManager prefManager=new PrefManager(this);
         FirebaseFirestore firestore=FirebaseFirestore.getInstance();
-        firestore.collection("All Users").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        firestore.collection("Admin Under Users").document("data").collection(prefManager.getUserEmail()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 

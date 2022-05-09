@@ -98,6 +98,9 @@ public class LoginActivity extends AppCompatActivity {
                                     String UID = mAuth.getCurrentUser().getUid();
                                     System.out.println("u id ---------------"+UID);
 
+                                    PrefManager prefManager=new PrefManager(getApplicationContext());
+                                    prefManager.setUserEmail(emailAddress);
+
                                     GetVerFication(emailAddress);
 
                                 }

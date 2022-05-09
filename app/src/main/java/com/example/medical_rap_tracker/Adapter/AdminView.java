@@ -39,13 +39,10 @@ public class AdminView extends RecyclerView.Adapter<AdminView.myHolder> {
     public void onBindViewHolder(@NonNull AdminView.myHolder holder, int position) {
 
         AdminAuth adminAuth=auths.get(position);
-        if (adminAuth.getType().equals("Users")){
+
             holder.tvfname.setText("Full Name : "+adminAuth.getFullnamre());
             holder.tvemail.setText("Email : "+adminAuth.getEmail());
 
-        }else {
-            Toast.makeText(context, "User Not Found", Toast.LENGTH_SHORT).show();
-        }
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

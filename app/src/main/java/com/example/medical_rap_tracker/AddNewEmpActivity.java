@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.medical_rap_tracker.Model.AdminAuth;
+import com.example.medical_rap_tracker.SharedPrefrence.PrefManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -81,6 +82,7 @@ public class AddNewEmpActivity extends AppCompatActivity {
     }
     public void AdminRegisterData(String email,String fullname,String type){
 
+        PrefManager prefManager=new PrefManager(this);
         FirebaseFirestore firestore=FirebaseFirestore.getInstance();
         AdminAuth auth=new AdminAuth(fullname,type,email);
 
@@ -88,7 +90,7 @@ public class AddNewEmpActivity extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 Toast.makeText(getApplicationContext(), "Account created", Toast.LENGTH_SHORT).show();
-                firestore.collection("All Users").add(auth).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                firestore.collection("Admin Under Users").document("data").collection(prefManager.getUserEmail()).add(auth).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         progressDialog.dismiss();
@@ -96,9 +98,20 @@ public class AddNewEmpActivity extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
+                        progressDialog.dismiss();
                     }
                 });
+//                firestore.collection("All Users").add(auth).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                    @Override
+//                    public void onSuccess(DocumentReference documentReference) {
+//                        progressDialog.dismiss();
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//
+//                    }
+//                });
 
             }
         }).addOnFailureListener(new OnFailureListener() {
