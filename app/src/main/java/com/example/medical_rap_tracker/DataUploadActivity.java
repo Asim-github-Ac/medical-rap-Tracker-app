@@ -153,13 +153,15 @@ public class DataUploadActivity extends AppCompatActivity implements LocationLis
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void takePicture() {
-        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+
+        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+        {
             requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
-        } else {
-            Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);//
-            startActivityForResult(Intent.createChooser(intent, "Select File"), CAMERA_REQUEST);
+        }
+        else
+        {
+            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(cameraIntent, CAMERA_REQUEST);
         }
     }
 
@@ -182,14 +184,13 @@ public class DataUploadActivity extends AppCompatActivity implements LocationLis
         super.onActivityResult(requestCode, resultCode, data);
 
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==CAMERA_REQUEST && resultCode==RESULT_OK) {
-//            Bundle extras = data.getExtras();
-//            photo = (Bitmap) extras.get("data");
-         //   takepic.setImageBitmap(imageBitmap);
-// Actually this uri is null, im confuse in this
-
-             mImageUri = data.getData();
-            clickImage.setImageURI(mImageUri);
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK)
+        {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            clickImage.setImageBitmap(photo);
+            mImageUri=getImageUri(this,photo);
+            System.out.println("uri is _____________________"+mImageUri);
+//
         }
     }
 
@@ -357,4 +358,11 @@ public class DataUploadActivity extends AppCompatActivity implements LocationLis
             e.printStackTrace();
         }
     }
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
 }
