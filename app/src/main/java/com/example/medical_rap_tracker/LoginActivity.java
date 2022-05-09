@@ -192,7 +192,6 @@ public class LoginActivity extends AppCompatActivity {
                         if (accountType.equals(authList.get(0).getType())) {
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             progressDialog.dismiss();
-
                             System.out.println("users_______________" + authList.get(0).getType());
                         }else {
                             progressDialog.dismiss();
