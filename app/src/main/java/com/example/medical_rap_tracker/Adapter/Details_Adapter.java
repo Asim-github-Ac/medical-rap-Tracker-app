@@ -61,9 +61,9 @@ public class Details_Adapter extends RecyclerView.Adapter<Details_Adapter.myHold
             tvcnic=itemView.findViewById(R.id.dr_cnic);
             medicine_name=itemView.findViewById(R.id.medicine_name);
             tvspcieal=itemView.findViewById(R.id.special_name);
-            tvabout=itemView.findViewById(R.id.dr_about_name);
+            tvabout=itemView.findViewById(R.id.about_doc);
             imgpicurl=itemView.findViewById(R.id.imgurl);
-            tvspcieal=itemView.findViewById(R.id.sample_decision);
+            tvsample=itemView.findViewById(R.id.sample_decision);
         }
     }
 }

@@ -15,6 +15,9 @@ public class UserModel_Data {
         this.sample_decision = sample_decision;
     }
 
+    public UserModel_Data() {
+    }
+
     public String getDr_name() {
         return dr_name;
     }
